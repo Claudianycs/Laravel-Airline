@@ -1,0 +1,45 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+:root { --aurora-navy:#14213d; --aurora-blue:#2459ce; --aurora-bg:#f3f6fb; }
+body { background:var(--aurora-bg); color:#24344d; font-family:system-ui,-apple-system,'Segoe UI',sans-serif; }
+a { text-decoration:none; }
+.topbar { background:#fff; border-bottom:1px solid #e2e8f1; min-height:72px; }
+.brand { color:var(--aurora-navy); font-weight:800; letter-spacing:-.6px; }
+.brand-mark { display:inline-grid; place-items:center; width:38px; height:38px; background:var(--aurora-blue); color:white; border-radius:12px; margin-right:9px; }
+.sidebar { background:var(--aurora-navy); color:#c2cee4; padding:24px 16px; }
+.sidebar .nav-link { color:#c2cee4; border-radius:9px; padding:12px; margin-bottom:4px; font-size:.93rem; }
+.sidebar .nav-link:hover,.sidebar .nav-link.active { color:#fff; background:#29406b; }
+.sidebar .nav-link i { margin-right:10px; }
+.sidebar-label { color:#90a2c3; font-size:.68rem; text-transform:uppercase; letter-spacing:1.5px; padding:15px 12px 8px; }
+.main-content { min-width:0; padding:28px; }
+.page-heading { font-weight:750; color:var(--aurora-navy); letter-spacing:-.6px; }
+.card { border:1px solid #e5ebf4; border-radius:16px; box-shadow:0 5px 18px #14213d04; }
+.card-header { background:white; border-color:#e5ebf4; padding:20px 24px; border-radius:16px 16px 0 0 !important; }
+.hero { background:linear-gradient(115deg,#14213d,#21479c); color:white; border-radius:20px; padding:32px; position:relative; overflow:hidden; }
+.hero::after { content:'✈'; position:absolute; right:26px; top:-26px; font-size:170px; color:#ffffff10; transform:rotate(-20deg); pointer-events:none; }
+.hero p { color:#c4d2ee; max-width:540px; }
+.eyebrow { font-size:.72rem; text-transform:uppercase; letter-spacing:2px; }
+.metric-icon { background:#eaf0ff; color:var(--aurora-blue); border-radius:12px; width:44px; height:44px; display:grid; place-items:center; font-size:1.2rem; }
+.metric-value { font-size:1.9rem; font-weight:750; color:var(--aurora-navy); }
+.menu-card { transition:transform .15s,border-color .15s; color:inherit; }
+.menu-card:hover { transform:translateY(-3px); border-color:#9db7ed; }
+.btn { border-radius:9px; padding:.6rem 1rem; font-weight:600; }
+.btn-sm { padding:.3rem .6rem; }
+.btn-primary { background:var(--aurora-blue); border-color:var(--aurora-blue); }
+.form-control,.form-select { border-radius:9px; padding:.65rem .8rem; border-color:#d8e0eb; }
+.form-label { font-weight:600; font-size:.9rem; }
+.table { color:#33435b; }
+.table thead th { background:#f7f9fc; font-size:.72rem; text-transform:uppercase; letter-spacing:.6px; padding:14px 20px; color:#728098; white-space:nowrap; }
+.table td { padding:16px 20px; vertical-align:middle; }
+.table tr:last-child td { border-bottom:0; }
+.route-code { font-size:1.8rem; font-weight:800; color:var(--aurora-navy); }
+.route-line { border-top:1px dashed #b7c5df; flex-grow:1; margin:0 20px; position:relative; }
+.route-line i { background:white; position:absolute; top:-14px; left:40%; color:var(--aurora-blue); padding:0 8px; }
+.flight-price { font-size:1.7rem; font-weight:750; color:var(--aurora-blue); }
+.auth-card { max-width:480px; margin:30px auto; }
+.empty-state { text-align:center; padding:55px 20px; color:#738096; }
+.ticket-reference { font-family:monospace; font-size:1.5rem; letter-spacing:3px; }
+.footer { font-size:.8rem; color:#7e8da5; margin-top:40px; }
+@media(min-width:992px) { .app-shell { display:grid; grid-template-columns:238px minmax(0,1fr); min-height:calc(100vh - 72px); } .sidebar { min-height:100%; } }
+@media(max-width:991px) { .main-content { padding:20px 14px; } .hero { padding:24px; } }
+@media print { .topbar,.sidebar,.no-print,.footer,.alert { display:none!important; } .app-shell { display:block; } body { background:white; } .main-content { padding:0; } .card { box-shadow:none; } }

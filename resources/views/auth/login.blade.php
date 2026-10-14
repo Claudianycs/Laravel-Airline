@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title','Bem-vindo de volta')
+@section('content')
+<div class="card auth-card"><div class="card-body p-4 p-md-5"><div class="metric-icon mb-4"><i aria-hidden="true" class="bi bi-airplane"></i></div><h1 class="page-heading h3">Bem-vindo de volta</h1><p class="text-secondary mb-4">Entre para gerenciar suas viagens.</p><form method="POST" action="{{ route('login') }}">@csrf<x-field name="email" :field="['label'=>'E-mail','type'=>'email']"/><x-field name="password" :field="['label'=>'Senha','type'=>'password']"/><div class="d-flex justify-content-between align-items-center mb-4"><div class="form-check"><input class="form-check-input" name="remember" id="remember" type="checkbox" value="1"><label class="form-check-label small" for="remember">Lembrar de mim</label></div><a class="small" href="{{ route('password.request') }}">Esqueci a senha</a></div><button class="btn btn-primary w-100">Entrar</button></form><p class="text-center small mt-4 mb-0">Ainda não tem conta? <a href="{{ route('register') }}">Cadastre-se</a></p></div></div>
+@endsection
