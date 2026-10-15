@@ -18,10 +18,7 @@ class Flight extends Model
 
     protected $fillable = ['airline_id', 'code', 'origin_id', 'destination_id', 'aircraft_id', 'departure_at', 'arrival_at', 'price_cents', 'status'];
 
-    protected function casts(): array
-    {
-        return ['departure_at' => 'datetime', 'arrival_at' => 'datetime', 'price_cents' => 'integer'];
-    }
+    protected $casts = ['departure_at' => 'datetime', 'arrival_at' => 'datetime', 'price_cents' => 'integer'];
 
     public function origin(): BelongsTo
     {

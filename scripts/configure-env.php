@@ -3,10 +3,12 @@
 // Prepare local development credentials without overwriting configured values.
 $root = dirname(__DIR__);
 $path = $root.'/.env';
-$content = file_exists($path) ? file_get_contents($path) : file_get_contents($root.'/.env.example');
+$existingConfiguration = file_exists($path);
+$content = $existingConfiguration ? file_get_contents($path) : file_get_contents($root.'/.env.example');
 foreach (['DB_PASSWORD', 'MYSQL_ROOT_PASSWORD', 'DEMO_ADMIN_PASSWORD', 'DEMO_AGENT_PASSWORD', 'DEMO_CUSTOMER_PASSWORD'] as $key) {
     if (preg_match('/^'.preg_quote($key, '/').'=(.*)$/m', $content, $match)) {
-        if (trim($match[1], " \t\"'") !== '') {
+        // An explicitly empty password is valid for an existing local MySQL (e.g. XAMPP).
+        if (($key === 'DB_PASSWORD' && $existingConfiguration) || trim($match[1], " \t\"'") !== '') {
             continue;
         }
         $content = preg_replace('/^'.preg_quote($key, '/').'=.*$/m', $key.'='.bin2hex(random_bytes(18)), $content);
@@ -21,5 +23,5 @@ if (! preg_match('/^APP_KEY=(.*)$/m', $content, $keyMatch) || trim($keyMatch[1],
 if (file_put_contents($path, $content, LOCK_EX) === false) {
     throw new RuntimeException('Não foi possível gravar .env.');
 }
-chmod($path,0600);
+chmod($path, 0600);
 echo "Configuração local preparada. Senhas existentes foram preservadas; consulte o arquivo .env para acesso.\n";

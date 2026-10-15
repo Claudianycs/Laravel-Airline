@@ -12,10 +12,7 @@ class Airline extends Model
 
     protected $fillable = ['name', 'iata', 'country', 'email', 'active'];
 
-    protected function casts(): array
-    {
-        return ['active' => 'boolean'];
-    }
+    protected $casts = ['active' => 'boolean'];
 
     public function aircraft(): HasMany
     {

@@ -20,10 +20,7 @@ class Aircraft extends Model
 
     protected $table = 'aircraft';
 
-    protected function casts(): array
-    {
-        return ['capacity' => 'integer'];
-    }
+    protected $casts = ['capacity' => 'integer'];
 
     public function flights(): HasMany
     {

@@ -13,10 +13,7 @@ class Customer extends Model
 
     protected $fillable = ['user_id', 'name', 'email', 'document', 'phone', 'birth_date'];
 
-    protected function casts(): array
-    {
-        return ['birth_date' => 'date'];
-    }
+    protected $casts = ['birth_date' => 'date'];
 
     public function user(): BelongsTo
     {

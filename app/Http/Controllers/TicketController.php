@@ -74,6 +74,6 @@ class TicketController extends Controller
         Gate::authorize('delete', $ticket);
         $ticket->delete();
 
-        return redirect()->route('tickets.index')->with('success','Passagem cancelada excluída.');
+        return redirect()->route('tickets.index')->with('success', 'Passagem cancelada excluída.');
     }
 }

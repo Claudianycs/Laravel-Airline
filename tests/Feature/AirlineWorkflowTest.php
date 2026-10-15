@@ -309,7 +309,7 @@ class AirlineWorkflowTest extends TestCase
         $this->seed();
         $counts = [User::count(), Airline::count(), Airport::count(), Aircraft::count(), Customer::count(), Flight::count(), Ticket::count()];
         $this->seed();
-        $this->assertSame($counts,[User::count(), Airline::count(), Airport::count(), Aircraft::count(), Customer::count(), Flight::count(), Ticket::count()]);
-        $this->assertSame([3, 1, 4, 3, 4, 6, 1],$counts);
+        $this->assertSame($counts, [User::count(), Airline::count(), Airport::count(), Aircraft::count(), Customer::count(), Flight::count(), Ticket::count()]);
+        $this->assertSame([3, 1, 4, 3, 4, 6, 1], $counts);
     }
 }

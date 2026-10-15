@@ -109,6 +109,6 @@ abstract class CrudController extends Controller
             } throw ValidationException::withMessages(['record' => 'Este cadastro possui registros vinculados e não pode ser excluído.']);
         }
 
-        return redirect()->route($this->resource.'.index')->with('success','Cadastro excluído.');
+        return redirect()->route($this->resource.'.index')->with('success', 'Cadastro excluído.');
     }
 }

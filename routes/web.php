@@ -13,6 +13,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/up', fn () => response()->json(['status' => 'ok']))->name('health');
 Route::get('/', fn () => auth()->check() ? redirect()->route('dashboard') : redirect()->route('market.index'));
 Route::get('/passagens', [MarketController::class, 'index'])->name('market.index');
 Route::middleware('guest')->group(function () {
@@ -35,5 +36,5 @@ Route::middleware('auth')->group(function () {
     foreach (['airlines' => AirlineController::class, 'airports' => AirportController::class, 'aircraft' => AircraftController::class, 'flights' => FlightController::class, 'customers' => CustomerController::class, 'users' => UserController::class] as $resource => $controller) {
         Route::resource($resource, $controller)->parameters([$resource => 'record']);
     }
-    Route::resource('tickets',TicketController::class);
+    Route::resource('tickets', TicketController::class);
 });

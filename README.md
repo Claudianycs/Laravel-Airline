@@ -2,7 +2,7 @@
 
 Projeto da aula de Tópicos Especiais.
 
-Sistema de companhia aérea em Laravel 12, Bootstrap 5 e MySQL 8.4, com phpMyAdmin 5.2. Interface em português, adaptada a celular e desktop.
+Sistema de companhia aérea em Laravel 10, Bootstrap 5 e MySQL 8.4, com phpMyAdmin 5.2. Interface em português, adaptada a celular e desktop.
 
 ![Dashboard da Aurora Airlines](docs/dashboard.png)
 
@@ -40,7 +40,7 @@ Registros vinculados não podem ser excluídos. Uma passagem só pode ser exclu�
 
 ## Instalação
 
-Requisitos: **PHP 8.2 ou superior** (validado com 8.4), Composer 2, Node.js 22.12+ ou 24 e Docker com Compose. Extensões PHP: PDO, pdo_mysql, mbstring, intl, curl, fileinfo, openssl, tokenizer, XML/DOM e zip. pdo_sqlite permite rodar a suíte rápida de testes.
+Requisitos: **PHP 8.1.4 ou superior** (validado com PHP 8.1.4), Composer 2.2+, Node.js 22.12+ ou 24 e Docker com Compose. Extensões PHP: PDO, pdo_mysql, mbstring, intl, curl, fileinfo, openssl, tokenizer, XML/DOM e zip. pdo_sqlite permite rodar a suíte rápida de testes.
 
 Na pasta extraída Laravel-Airline, execute:
 
@@ -56,11 +56,57 @@ php artisan serve
 
 Em Linux/macOS, bash scripts/setup.sh executa a preparação completa; depois inicie o servidor PHP. O comando composer setup prepara a aplicação quando o banco já estiver disponível. Para trabalhar com atualização automática dos assets, use composer dev.
 
-O script configure-env.php cria .env, uma chave Laravel e senhas aleatórias para o banco e as contas de demonstração. Valores já configurados são preservados. Não há senha padrão no código. O .env não integra o ZIP nem o Git.
+O script configure-env.php cria .env, uma chave Laravel e senhas aleatórias para o banco e as contas de demonstração. Valores já configurados são preservados, inclusive uma senha de MySQL explicitamente vazia em um .env existente. Não há senha padrão no código. O .env não integra o ZIP nem o Git.
 
 O servidor de desenvolvimento PHP utiliza a porta **8000**. MySQL usa **3306**; phpMyAdmin usa **8081**. Os serviços Docker são publicados apenas na interface local. Para um ambiente em nuvem, use o mecanismo de acesso/encaminhamento de portas da sua plataforma.
 
 Se houver conflito de portas, configure MYSQL_PORT, DB_PORT e PHPMYADMIN_PORT no .env. MySQL mantém os dados no volume Docker mysql_data. docker compose stop preserva o volume; docker compose down -v remove os dados.
+
+### Windows com PHP 8.1.4 e MySQL/phpMyAdmin existentes (sem Docker)
+
+1. Baixe novamente o ZIP atualizado do GitHub e extraia em uma **pasta nova**. Não copie vendor, node_modules ou bootstrap/cache da versão anterior (Laravel 12).
+2. Inicie o MySQL no seu painel local, por exemplo XAMPP. No phpMyAdmin, crie um banco vazio chamado airline, com collation utf8mb4_unicode_ci.
+3. Abra o PowerShell na pasta extraída e execute:
+
+~~~powershell
+php -v
+php scripts/configure-env.php
+~~~
+
+4. Abra o arquivo .env em um editor e configure seu banco. Por exemplo, em um XAMPP local cujo usuário root esteja sem senha:
+
+~~~dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=airline
+DB_USERNAME=root
+DB_PASSWORD=
+~~~
+
+Se seu MySQL usa senha ou outra porta, informe os valores reais da sua instalação. Não utilize a senha gerada para o Docker em um MySQL existente: configure a senha que seu banco já utiliza.
+
+5. Continue no PowerShell:
+
+~~~powershell
+composer install
+composer check-platform-reqs
+php artisan optimize:clear
+php artisan migrate --seed
+npm ci
+npm run build
+php artisan serve
+~~~
+
+6. No navegador do seu computador, abra http://localhost:8000. Entre com admin@aurora.test e a senha presente em DEMO_ADMIN_PASSWORD no .env.
+
+Para usar um banco já preenchido pela versão anterior, preserve seu .env e faça backup do banco; nenhuma migration de entidades foi alterada. Depois execute php artisan migrate --seed, que mantém os registros existentes.
+
+Se optar por atualizar na mesma pasta, preserve seu .env e remova a pasta vendor antiga e os arquivos PHP gerados em bootstrap/cache antes de executar composer install (preserve o arquivo .gitignore). Utilize o composer.json e o composer.lock **novos**. Nunca edite vendor/composer/platform_check.php e não utilize --ignore-platform-reqs.
+
+### Limite desta versão de compatibilidade
+
+Laravel 10 e PHP 8.1 estão fora do suporte de segurança. Esta adaptação atende ao uso local/acadêmico com o PHP existente; não é recomendada para publicação em produção. O Composer informa quatro avisos de segurança no framework legado. Detalhes estão em docs/VALIDACAO.md. Nenhuma verificação de plataforma, assinatura, TLS ou auditoria foi desabilitada.
 
 ### Acessos de demonstração
 
@@ -78,7 +124,7 @@ No phpMyAdmin, o servidor é mysql, o usuário é o valor de DB_USERNAME (padrã
 
 Também é possível usar um MySQL já instalado e seu phpMyAdmin. Execute php scripts/configure-env.php; configure DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME e DB_PASSWORD no .env para o banco existente; crie um banco vazio e execute os comandos Composer, migrations e npm acima. Nesse caso, não é necessário iniciar o Docker.
 
-O ambiente PHP precisa cumprir a versão e as extensões do projeto; instalações antigas de XAMPP podem exigir atualização.
+Esta versão foi adaptada para PHP 8.1.4 / Laravel 10. Ative as extensões exigidas pelo Composer no php.ini caso alguma esteja desabilitada. O arquivo composer.lock fixa dependências compatíveis com PHP 8.1.4.
 
 ### Arquivo SQL para phpMyAdmin
 

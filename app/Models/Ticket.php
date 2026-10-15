@@ -12,10 +12,7 @@ class Ticket extends Model
 
     protected $fillable = ['reference', 'flight_id', 'customer_id', 'sold_by', 'price_cents', 'status', 'payment_method', 'paid_at'];
 
-    protected function casts(): array
-    {
-        return ['paid_at' => 'datetime', 'price_cents' => 'integer'];
-    }
+    protected $casts = ['paid_at' => 'datetime', 'price_cents' => 'integer'];
 
     public function flight(): BelongsTo
     {
